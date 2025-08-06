@@ -23,7 +23,11 @@ const App: React.FC = () => {
           <Toaster 
             position="top-right"
             toastOptions={{
+<<<<<<< HEAD
               duration: 3000,
+=======
+              duration: 4000,
+>>>>>>> f73d985fb2c11ca1b8aeb6510f4465ea32fd8f9c
               style: {
                 background: 'rgba(0, 0, 0, 0.9)',
                 color: '#fff',

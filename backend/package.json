@@ -5,8 +5,12 @@
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
+<<<<<<< HEAD
     "dev": "nodemon src/server.js",
     "seed": "node src/seed.js"
+=======
+    "dev": "nodemon src/server.js"
+>>>>>>> f73d985fb2c11ca1b8aeb6510f4465ea32fd8f9c
   },
   "dependencies": {
     "express": "^4.18.2",

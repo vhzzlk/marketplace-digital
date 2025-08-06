@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🛒 CyberMarket
 
 Marketplace digital completo com funcionalidades de vendedor e consumidor, construído com React + TypeScript (frontend) e Node.js + Express + MongoDB (backend).
@@ -26,15 +27,76 @@ npm start
 - **Frontend:** http://localhost:5173
 - **Backend:** http://localhost:5000
 - **Health Check:** http://localhost:5000/api/health
+=======
+# 🛒 Marketplace Digital
+
+Um marketplace completo com funcionalidades de vendedor e consumidor, construído com React + TypeScript (frontend) e Node.js + Express + MongoDB (backend).
+
+## 🚀 Início Rápido
+
+### 1. Verificar Node.js
+```powershell
+node --version
+```
+
+### 2. Instalar Dependências
+```powershell
+# Backend
+cd backend
+copy env_final.txt .env
+npm install
+
+# Frontend
+cd ../frontend
+npm install
+```
+
+### 3. Executar
+```powershell
+# Terminal 1 - Backend
+cd backend
+npm run dev
+
+# Terminal 2 - Frontend
+cd frontend
+npm start
+```
+
+### 4. Acessar
+- **Frontend:** http://localhost:5173
+- **Backend:** http://localhost:5000
+
+## 📖 Tutorial Completo
+
+Para instruções detalhadas, troubleshooting e explicações completas, consulte:
+
+**[📋 TUTORIAL.md](TUTORIAL.md)**
+
+## 🌐 URLs de Acesso
+
+| Serviço | URL | Descrição |
+|---------|-----|-----------|
+| **Frontend** | http://localhost:5173 | Interface principal |
+| **Backend API** | http://localhost:5000 | API REST |
+| **Health Check** | http://localhost:5000/api/health | Status do servidor |
+>>>>>>> f73d985fb2c11ca1b8aeb6510f4465ea32fd8f9c
 
 ## 📱 Funcionalidades
 
 ### Para Vendedores
+<<<<<<< HEAD
+=======
+- ✅ Cadastro e login
+>>>>>>> f73d985fb2c11ca1b8aeb6510f4465ea32fd8f9c
 - ✅ Dashboard de vendas
 - ✅ Gerenciamento de produtos
 - ✅ Visualização de pedidos
 
 ### Para Consumidores
+<<<<<<< HEAD
+=======
+- ✅ Cadastro e login
+>>>>>>> f73d985fb2c11ca1b8aeb6510f4465ea32fd8f9c
 - ✅ Navegação por produtos
 - ✅ Carrinho de compras
 - ✅ Histórico de pedidos
@@ -42,9 +104,14 @@ npm start
 ### Sistema
 - ✅ Autenticação JWT
 - ✅ Rate limiting
+<<<<<<< HEAD
 - ✅ Interface responsiva
 - ✅ Notificações em tempo real
 - ✅ Modo demo (funciona sem banco)
+=======
+- ✅ Validação de dados
+- ✅ Interface responsiva
+>>>>>>> f73d985fb2c11ca1b8aeb6510f4465ea32fd8f9c
 
 ## 🛠️ Tecnologias
 
@@ -52,10 +119,15 @@ npm start
 - React 18 + TypeScript
 - Vite
 - Tailwind CSS
+<<<<<<< HEAD
+=======
+- React Router DOM
+>>>>>>> f73d985fb2c11ca1b8aeb6510f4465ea32fd8f9c
 - Framer Motion
 
 ### Backend
 - Node.js + Express
+<<<<<<< HEAD
 - MongoDB Atlas (opcional)
 - JWT Authentication
 - bcryptjs
@@ -168,3 +240,21 @@ npm start
 **🚀 Seu marketplace digital está pronto!**
 
 O projeto funciona imediatamente em modo demo, sem necessidade de configuração de banco de dados. 
+=======
+- MongoDB Atlas
+- JWT Authentication
+- bcryptjs
+- CORS + Helmet
+
+## 🚨 Problemas?
+
+Consulte o **[📋 TUTORIAL.md](TUTORIAL.md)** para:
+- Troubleshooting detalhado
+- Soluções para problemas comuns
+- Logs e debugging
+- Estrutura do projeto
+
+---
+
+**🚀 Seu marketplace digital está pronto para uso!**
+>>>>>>> f73d985fb2c11ca1b8aeb6510f4465ea32fd8f9c
