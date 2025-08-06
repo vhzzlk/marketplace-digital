@@ -25,7 +25,13 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { useApp } from '../contexts/AppContext';
 import ProductCard from '../components/ProductCard';
+import UrgencyNotifications from '../components/UrgencyNotifications';
+import EnhancedHeader from '../components/EnhancedHeader';
+import EnhancedCart from '../components/EnhancedCart';
+import UrgencyTimer from '../components/UrgencyTimer';
+import LiveActivityIndicator from '../components/LiveActivityIndicator';
 
 interface Product {
   _id: string;
@@ -51,18 +57,16 @@ interface Product {
 }
 
 const Home: React.FC = () => {
+  const { state, actions } = useApp();
   const [searchTerm, setSearchTerm] = useState('');
   const [isPlaying, setIsPlaying] = useState(true);
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [cartCount, setCartCount] = useState(3);
-  const [liveUsers, setLiveUsers] = useState(1247);
 
-  // Simulate live user count
+  // Initialize featured products in context
   useEffect(() => {
-    const interval = setInterval(() => {
-      setLiveUsers(prev => prev + Math.floor(Math.random() * 3) - 1);
-    }, 3000);
-    return () => clearInterval(interval);
+    if (featuredProducts.length > 0) {
+      actions.dispatch({ type: 'SET_PRODUCTS', payload: featuredProducts });
+    }
   }, []);
 
   // Auto-rotating testimonials
@@ -176,109 +180,62 @@ const Home: React.FC = () => {
   ];
 
   const handleAddToCart = (product: Product) => {
-    setCartCount(prev => prev + 1);
-    toast.success(`${product.name} adicionado ao carrinho!`, {
-      icon: '🛒',
-      style: {
-        background: 'rgba(0, 212, 255, 0.9)',
-        color: '#000',
-      },
-    });
+    actions.addToCart(product, 1);
   };
 
   const handleViewDetails = (product: Product) => {
+    actions.addRecentlyViewed(product);
     toast.success(`Visualizando ${product.name}`);
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
-      {/* Live Activity Bar */}
-      <motion.div 
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        className="bg-black/20 backdrop-blur-sm border-b border-white/10 py-2"
+      {/* Enhanced Header */}
+      <EnhancedHeader />
+      
+      {/* Urgency Notifications */}
+      <UrgencyNotifications />
+      
+      {/* Enhanced Cart */}
+      <EnhancedCart />
+
+      {/* Flash Sale Timer */}
+      <motion.section 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3 }}
+        className="container mx-auto px-4 py-6"
       >
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between text-sm">
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                <span className="text-green-400 font-semibold">{liveUsers} pessoas online</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Fire className="w-4 h-4 text-orange-400" />
-                <span className="text-orange-400">Flash Sale ativo!</span>
-              </div>
-            </div>
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2">
-                <TrendingUp className="w-4 h-4 text-cyan-400" />
-                <span className="text-cyan-400">+15% de desconto hoje</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </motion.div>
+        <UrgencyTimer 
+          endTime={new Date(Date.now() + 2 * 60 * 60 * 1000)} // 2 hours from now
+          title="🔥 MEGA FLASH SALE termina em:"
+          className="max-w-md mx-auto"
+        />
+      </motion.section>
 
-      {/* Header */}
-      <motion.header 
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        className="glass-effect sticky top-0 z-50"
+      {/* Search Section */}
+      <motion.section 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4 }}
+        className="container mx-auto px-4 py-4"
       >
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <motion.div 
-              whileHover={{ scale: 1.05 }}
-              className="flex items-center space-x-2"
-            >
-              <div className="w-10 h-10 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-lg flex items-center justify-center">
-                <Zap className="w-6 h-6 text-white" />
-              </div>
-              <h1 className="cyber-font text-2xl font-bold gradient-text">
-                CyberMarket
-              </h1>
-            </motion.div>
-
-            <div className="flex items-center space-x-4">
-              <motion.div 
-                whileHover={{ scale: 1.05 }}
-                className="relative"
-              >
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <input
-                  type="text"
-                  placeholder="Buscar produtos..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 pr-4 py-2 bg-black/20 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400"
-                />
-              </motion.div>
-
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="relative p-2"
-              >
-                <ShoppingCart className="w-6 h-6 text-white" />
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center animate-pulse">
-                  {cartCount}
-                </span>
-              </motion.button>
-
-              <Link to="/login">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="bg-gradient-to-r from-cyan-400 to-blue-500 text-white px-4 py-2 rounded-lg font-semibold hover:shadow-lg transition-all duration-300"
-                >
-                  Entrar
-                </motion.button>
-              </Link>
-            </div>
-          </div>
+        <div className="max-w-2xl mx-auto">
+          <motion.div 
+            whileHover={{ scale: 1.02 }}
+            className="relative"
+          >
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <input
+              type="text"
+              placeholder="🔍 Buscar produtos, ofertas, cupons..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full pl-12 pr-4 py-4 bg-white/10 border-2 border-white/20 rounded-xl text-white placeholder-gray-300 backdrop-blur-sm focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/50 transition-all"
+            />
+          </motion.div>
         </div>
-      </motion.header>
+      </motion.section>
 
       {/* Hero Section */}
       <motion.section 

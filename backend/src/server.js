@@ -7,10 +7,7 @@ const PORT = process.env.PORT || 5000;
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/marketplace';
 
 // Conexão com o banco de dados
-mongoose.connect(MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
+mongoose.connect(MONGODB_URI)
 .then(() => {
     console.log('✅ Conectado ao banco de dados MongoDB Atlas');
     console.log(`🌐 Servidor rodando na porta ${PORT}`);
