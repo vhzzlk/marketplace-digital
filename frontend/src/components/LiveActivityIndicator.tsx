@@ -1,0 +1,125 @@
+import React, { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import { Users, Eye, ShoppingCart, Zap, Flame } from 'lucide-react';
+import { useApp } from '../contexts/AppContext';
+
+interface LiveActivityIndicatorProps {
+  productId?: string;
+  showGlobal?: boolean;
+  className?: string;
+}
+
+const LiveActivityIndicator: React.FC<LiveActivityIndicatorProps> = ({ 
+  productId, 
+  showGlobal = false,
+  className = ""
+}) => {
+  const { state } = useApp();
+  const [currentViewers, setCurrentViewers] = useState(0);
+  const [recentPurchases, setRecentPurchases] = useState(0);
+
+  // Simulate live viewer count for specific product
+  useEffect(() => {
+    if (productId) {
+      // Simulate real-time viewer count
+      const baseViewers = Math.floor(Math.random() * 15) + 3; // 3-18 viewers
+      setCurrentViewers(baseViewers);
+      
+      const interval = setInterval(() => {
+        const change = Math.floor(Math.random() * 5) - 2; // -2 to +2
+        setCurrentViewers(prev => Math.max(1, prev + change));
+      }, 3000);
+      
+      return () => clearInterval(interval);
+    }
+  }, [productId]);
+
+  // Simulate recent purchases
+  useEffect(() => {
+    const basePurchases = Math.floor(Math.random() * 50) + 10; // 10-60 purchases
+    setRecentPurchases(basePurchases);
+    
+    const interval = setInterval(() => {
+      setRecentPurchases(prev => prev + Math.floor(Math.random() * 3));
+    }, 8000);
+    
+    return () => clearInterval(interval);
+  }, []);
+
+  if (showGlobal) {
+    return (
+      <motion.div 
+        className={`flex items-center space-x-4 ${className}`}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        {/* Global online users */}
+        <div className="flex items-center space-x-2 bg-green-500/20 text-green-400 
+                       px-3 py-1 rounded-full backdrop-blur-sm border border-green-500/30">
+          <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+          <Users className="w-4 h-4" />
+          <span className="text-sm font-medium">
+            {state.liveUsersCount.toLocaleString()} online
+          </span>
+        </div>
+
+        {/* Recent activity */}
+        <div className="flex items-center space-x-2 bg-blue-500/20 text-blue-400 
+                       px-3 py-1 rounded-full backdrop-blur-sm border border-blue-500/30">
+          <Zap className="w-4 h-4" />
+          <span className="text-sm font-medium">
+            {recentPurchases} vendas hoje
+          </span>
+        </div>
+      </motion.div>
+    );
+  }
+
+  // Product-specific indicators
+  return (
+    <div className={`space-y-2 ${className}`}>
+      {/* Current viewers */}
+      <motion.div 
+        className="flex items-center space-x-2 bg-orange-500/20 text-orange-400 
+                   px-2 py-1 rounded-lg backdrop-blur-sm border border-orange-500/30"
+        animate={{ scale: [1, 1.05, 1] }}
+        transition={{ duration: 2, repeat: Infinity }}
+      >
+        <div className="w-2 h-2 bg-orange-400 rounded-full animate-pulse" />
+        <Eye className="w-3 h-3" />
+        <span className="text-xs font-medium">
+          {currentViewers} {currentViewers === 1 ? 'pessoa vendo' : 'pessoas vendo'}
+        </span>
+      </motion.div>
+
+      {/* Hot indicator */}
+      {currentViewers >= 10 && (
+        <motion.div 
+          className="flex items-center space-x-1 bg-red-500/20 text-red-400 
+                     px-2 py-1 rounded-lg backdrop-blur-sm border border-red-500/30"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ type: "spring", stiffness: 500, damping: 30 }}
+        >
+          <Flame className="w-3 h-3 animate-pulse" />
+          <span className="text-xs font-bold">QUENTE!</span>
+        </motion.div>
+      )}
+
+      {/* Recent purchases */}
+      <motion.div 
+        className="flex items-center space-x-2 bg-purple-500/20 text-purple-400 
+                   px-2 py-1 rounded-lg backdrop-blur-sm border border-purple-500/30"
+        whileHover={{ scale: 1.05 }}
+      >
+        <ShoppingCart className="w-3 h-3" />
+        <span className="text-xs font-medium">
+          {Math.floor(recentPurchases / 10)} compras recentes
+        </span>
+      </motion.div>
+    </div>
+  );
+};
+
+export default LiveActivityIndicator;

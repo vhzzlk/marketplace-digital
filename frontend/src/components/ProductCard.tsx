@@ -13,6 +13,7 @@ import {
   Share2
 } from 'lucide-react';
 import toast from 'react-hot-toast';
+import LiveActivityIndicator from './LiveActivityIndicator';
 
 interface Product {
   _id: string;
@@ -286,6 +287,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onViewD
               <Clock className="w-4 h-4" />
               <span>{product.deliveryTime}min</span>
             </div>
+          </div>
+
+          {/* Live Activity Indicator */}
+          <div className="mb-4">
+            <LiveActivityIndicator productId={product._id} />
           </div>
 
           {/* Flash Sale Countdown */}
