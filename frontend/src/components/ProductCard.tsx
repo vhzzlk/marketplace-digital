@@ -1,5 +1,10 @@
+<<<<<<< HEAD
+import React, { useState, useEffect, useMemo } from 'react';
+import { motion } from 'framer-motion';
+=======
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+>>>>>>> f73d985fb2c11ca1b8aeb6510f4465ea32fd8f9c
 import { 
   ShoppingCart, 
   Star, 
@@ -8,12 +13,18 @@ import {
   TrendingUp, 
   Zap,
   Fire,
+<<<<<<< HEAD
+  AlertTriangle
+} from 'lucide-react';
+import toast from 'react-hot-toast';
+=======
   AlertTriangle,
   Heart,
   Share2
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import LiveActivityIndicator from './LiveActivityIndicator';
+>>>>>>> f73d985fb2c11ca1b8aeb6510f4465ea32fd8f9c
 
 interface Product {
   _id: string;
@@ -25,7 +36,10 @@ interface Product {
   category: string;
   rating: number;
   reviewCount: number;
+<<<<<<< HEAD
+=======
   preparationTime: number;
+>>>>>>> f73d985fb2c11ca1b8aeb6510f4465ea32fd8f9c
   deliveryTime: number;
   stock: number;
   isLimited?: boolean;
@@ -33,6 +47,10 @@ interface Product {
   isFlashSale?: boolean;
   flashSaleEndsAt?: string;
   isTrending?: boolean;
+<<<<<<< HEAD
+  views: number;
+  sales: number;
+=======
   isFeatured?: boolean;
   views: number;
   sales: number;
@@ -44,6 +62,7 @@ interface Product {
     stockStatus: string;
     timeLeft?: number;
   };
+>>>>>>> f73d985fb2c11ca1b8aeb6510f4465ea32fd8f9c
 }
 
 interface ProductCardProps {
@@ -53,6 +72,49 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onViewDetails }) => {
+<<<<<<< HEAD
+  const [timeLeft, setTimeLeft] = useState<number | null>(null);
+
+  // Memoized calculations
+  const { discountPercentage, stockStatus, formattedTimeLeft } = useMemo(() => {
+    const discount = product.originalPrice && product.price 
+      ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
+      : 0;
+
+    const stock = product.isLimited && product.limitedStock
+      ? product.limitedStock <= 3 ? 'critical' : product.limitedStock <= 10 ? 'low' : 'available'
+      : product.stock === 0 ? 'out' : 'available';
+
+    const time = timeLeft ? {
+      hours: Math.floor(timeLeft / (1000 * 60 * 60)),
+      minutes: Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60)),
+      seconds: Math.floor((timeLeft % (1000 * 60)) / 1000)
+    } : null;
+
+    const formatted = time 
+      ? `${time.hours.toString().padStart(2, '0')}:${time.minutes.toString().padStart(2, '0')}:${time.seconds.toString().padStart(2, '0')}`
+      : '';
+
+    return { discountPercentage: discount, stockStatus: stock, formattedTimeLeft: formatted };
+  }, [product, timeLeft]);
+
+  // Countdown timer
+  useEffect(() => {
+    if (!product.isFlashSale || !product.flashSaleEndsAt) return;
+
+    const timer = setInterval(() => {
+      const now = new Date().getTime();
+      const endTime = new Date(product.flashSaleEndsAt!).getTime();
+      const remaining = Math.max(0, endTime - now);
+      setTimeLeft(remaining);
+      
+      if (remaining <= 0) clearInterval(timer);
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [product.isFlashSale, product.flashSaleEndsAt]);
+
+=======
   const [isHovered, setIsHovered] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const [timeLeft, setTimeLeft] = useState<number | null>(null);
@@ -98,10 +160,26 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onViewD
     return 'available';
   };
 
+>>>>>>> f73d985fb2c11ca1b8aeb6510f4465ea32fd8f9c
   const handleAddToCart = () => {
     onAddToCart(product);
     toast.success(`${product.name} adicionado ao carrinho!`, {
       icon: '🛒',
+<<<<<<< HEAD
+      style: { background: 'rgba(0, 212, 255, 0.9)', color: '#000' }
+    });
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      whileHover={{ y: -5, scale: 1.02 }}
+      className="relative group cursor-pointer"
+    >
+      {/* Badges */}
+      <div className="absolute top-3 left-3 z-10 flex flex-col gap-2">
+=======
       style: {
         background: 'rgba(0, 212, 255, 0.9)',
         color: '#000',
@@ -143,10 +221,17 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onViewD
     >
       {/* Urgency Badges */}
       <AnimatePresence>
+>>>>>>> f73d985fb2c11ca1b8aeb6510f4465ea32fd8f9c
         {product.isFlashSale && (
           <motion.div
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 1, scale: 1 }}
+<<<<<<< HEAD
+            className="flash-sale-badge text-white text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1"
+          >
+            <Fire className="w-3 h-3" />
+            FLASH SALE
+=======
             exit={{ opacity: 0, scale: 0 }}
             className="absolute top-3 left-3 z-10"
           >
@@ -168,6 +253,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onViewD
               <TrendingUp className="w-3 h-3" />
               TRENDING
             </div>
+>>>>>>> f73d985fb2c11ca1b8aeb6510f4465ea32fd8f9c
           </motion.div>
         )}
 
@@ -175,6 +261,32 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onViewD
           <motion.div
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 1, scale: 1 }}
+<<<<<<< HEAD
+            className="limited-stock-badge text-white text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1"
+          >
+            <AlertTriangle className="w-3 h-3" />
+            SÓ {product.limitedStock} RESTAM!
+          </motion.div>
+        )}
+      </div>
+
+      {product.isTrending && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="absolute top-3 right-3 z-10"
+        >
+          <div className="trending-badge text-white text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
+            <TrendingUp className="w-3 h-3" />
+            TRENDING
+          </div>
+        </motion.div>
+      )}
+
+      {/* Main Card */}
+      <div className="glass-effect rounded-2xl overflow-hidden hover:neon-glow transition-all duration-300">
+        {/* Image */}
+=======
             exit={{ opacity: 0, scale: 0 }}
             className="absolute top-12 left-3 z-10"
           >
@@ -203,10 +315,21 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onViewD
       {/* Main Card */}
       <div className="glass-effect rounded-2xl overflow-hidden hover:neon-glow transition-all duration-500">
         {/* Image Container */}
+>>>>>>> f73d985fb2c11ca1b8aeb6510f4465ea32fd8f9c
         <div className="relative h-48 overflow-hidden">
           <img
             src={product.imageUrl}
             alt={product.name}
+<<<<<<< HEAD
+            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+            loading="lazy"
+          />
+          
+          {/* Category & Views */}
+          <div className="absolute bottom-3 left-3 bg-black/50 text-white text-xs px-2 py-1 rounded">
+            {product.category}
+          </div>
+=======
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
           />
           
@@ -241,6 +364,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onViewD
           </div>
 
           {/* Views Badge */}
+>>>>>>> f73d985fb2c11ca1b8aeb6510f4465ea32fd8f9c
           <div className="absolute bottom-3 right-3 bg-black/50 text-white text-xs px-2 py-1 rounded flex items-center gap-1">
             <Eye className="w-3 h-3" />
             {product.views}
@@ -248,7 +372,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onViewD
         </div>
 
         {/* Content */}
+<<<<<<< HEAD
+        <div className="p-5">
+=======
         <div className="p-6">
+>>>>>>> f73d985fb2c11ca1b8aeb6510f4465ea32fd8f9c
           {/* Title and Rating */}
           <div className="flex items-start justify-between mb-3">
             <h3 className="text-lg font-bold text-white line-clamp-2 flex-1 mr-2">
@@ -289,6 +417,20 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onViewD
             </div>
           </div>
 
+<<<<<<< HEAD
+          {/* Flash Sale Countdown */}
+          {product.isFlashSale && timeLeft !== null && timeLeft > 0 && (
+            <div className="mb-4">
+              <div className="text-center mb-2">
+                <div className="text-xs text-gray-300 mb-1">PROMOÇÃO TERMINA EM:</div>
+                <div className="font-mono text-lg font-bold text-red-400">
+                  {formattedTimeLeft}
+                </div>
+              </div>
+              <div className="w-full bg-gray-700 rounded-full h-2">
+                <div 
+                  className="bg-red-500 h-2 rounded-full transition-all duration-300"
+=======
           {/* Live Activity Indicator */}
           <div className="mb-4">
             <LiveActivityIndicator productId={product._id} />
@@ -306,6 +448,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onViewD
               <div className="progress-bar">
                 <div 
                   className="progress-fill"
+>>>>>>> f73d985fb2c11ca1b8aeb6510f4465ea32fd8f9c
                   style={{ 
                     width: `${Math.max(0, Math.min(100, (timeLeft / (24 * 60 * 60 * 1000)) * 100))}%` 
                   }}
@@ -318,7 +461,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onViewD
           {product.isLimited && product.limitedStock && (
             <div className="mb-4">
               <div className="flex items-center justify-between text-sm">
+<<<<<<< HEAD
+                <span className="text-gray-300">Estoque:</span>
+=======
                 <span className="text-gray-300">Estoque limitado:</span>
+>>>>>>> f73d985fb2c11ca1b8aeb6510f4465ea32fd8f9c
                 <span className={`font-bold ${
                   product.limitedStock <= 3 ? 'text-red-400' : 
                   product.limitedStock <= 10 ? 'text-orange-400' : 'text-green-400'

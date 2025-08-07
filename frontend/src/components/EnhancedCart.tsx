@@ -6,11 +6,15 @@ import {
   Plus, 
   Minus, 
   Truck, 
+<<<<<<< HEAD
+  Gift
+=======
   Zap, 
   Gift,
   Star,
   TrendingUp,
   Clock
+>>>>>>> f73d985fb2c11ca1b8aeb6510f4465ea32fd8f9c
 } from 'lucide-react';
 import { useApp } from '../contexts/AppContext';
 
@@ -33,6 +37,12 @@ const EnhancedCart: React.FC = () => {
   };
 
   const getUrgencyMessage = () => {
+<<<<<<< HEAD
+    if (hasFreeShipping) return "🎉 Frete GRÁTIS!";
+    if (freeShippingRemaining <= 15) return `⚡ R$ ${freeShippingRemaining.toFixed(2)} para frete GRÁTIS!`;
+    if (freeShippingRemaining <= 25) return `🚀 R$ ${freeShippingRemaining.toFixed(2)} para frete grátis`;
+    return `🛒 R$ ${freeShippingRemaining.toFixed(2)} para frete GRÁTIS!`;
+=======
     if (hasFreeShipping) {
       return "🎉 Parabéns! Você tem frete GRÁTIS!";
     }
@@ -43,6 +53,7 @@ const EnhancedCart: React.FC = () => {
       return `🚀 Você está quase lá! R$ ${freeShippingRemaining.toFixed(2)} para frete grátis`;
     }
     return `🛒 Adicione mais R$ ${freeShippingRemaining.toFixed(2)} e ganhe frete GRÁTIS!`;
+>>>>>>> f73d985fb2c11ca1b8aeb6510f4465ea32fd8f9c
   };
 
   const getProgressColor = () => {
@@ -99,6 +110,92 @@ const EnhancedCart: React.FC = () => {
                   {hasFreeShipping && <Truck className="w-4 h-4 text-green-500" />}
                 </div>
                 
+<<<<<<< HEAD
+                {/* Progress Bar */}
+                <div className="w-full bg-gray-200 rounded-full h-3">
+                  <div 
+                    className={`h-3 rounded-full bg-gradient-to-r ${getProgressColor()} transition-all duration-300`}
+                    style={{ 
+                      width: `${Math.min(100, (cartMetrics.totalValue / cartMetrics.freeShippingThreshold) * 100)}%` 
+                    }}
+                  />
+                </div>
+                
+                <div className="flex justify-between text-xs text-gray-500 mt-1">
+                  <span>R$ {cartMetrics.totalValue.toFixed(2)}</span>
+                  <span>R$ {cartMetrics.freeShippingThreshold.toFixed(2)}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Cart Items */}
+            <div className="flex-1 overflow-y-auto p-4">
+              {cart.length === 0 ? (
+                <div className="text-center py-8">
+                  <ShoppingCart className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+                  <h3 className="text-lg font-medium text-gray-900 mb-2">Carrinho vazio</h3>
+                  <p className="text-gray-500">Adicione produtos para começar</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {cart.map((item) => (
+                    <motion.div
+                      key={item._id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg"
+                    >
+                      {/* Product Image */}
+                      <img
+                        src={item.imageUrl}
+                        alt={item.name}
+                        className="w-16 h-16 object-cover rounded-lg"
+                        loading="lazy"
+                      />
+                      
+                      {/* Product Info */}
+                      <div className="flex-1 min-w-0">
+                        <h4 className="text-sm font-medium text-gray-900 truncate">
+                          {item.name}
+                        </h4>
+                        <p className="text-sm text-gray-500">
+                          R$ {item.price.toFixed(2)}
+                        </p>
+                      </div>
+                      
+                      {/* Quantity Controls */}
+                      <div className="flex items-center space-x-2">
+                        <button
+                          onClick={() => updateQuantity(item._id, item.quantity - 1)}
+                          className="p-1 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors"
+                        >
+                          <Minus className="w-4 h-4" />
+                        </button>
+                        
+                        <span className="text-sm font-medium w-8 text-center">
+                          {item.quantity}
+                        </span>
+                        
+                        <button
+                          onClick={() => updateQuantity(item._id, item.quantity + 1)}
+                          className="p-1 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors"
+                        >
+                          <Plus className="w-4 h-4" />
+                        </button>
+                      </div>
+                      
+                      {/* Remove Button */}
+                      <button
+                        onClick={() => actions.removeFromCart(item._id)}
+                        className="p-1 text-red-500 hover:bg-red-50 rounded-full transition-colors"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    </motion.div>
+                  ))}
+                </div>
+=======
                 <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
                   <motion.div
                     className={`h-full bg-gradient-to-r ${getProgressColor()}`}
@@ -219,11 +316,42 @@ const EnhancedCart: React.FC = () => {
                     )}
                   </motion.div>
                 ))
+>>>>>>> f73d985fb2c11ca1b8aeb6510f4465ea32fd8f9c
               )}
             </div>
 
             {/* Footer */}
             {cart.length > 0 && (
+<<<<<<< HEAD
+              <div className="border-t p-4 bg-gray-50">
+                {/* Savings */}
+                {cartMetrics.savedAmount > 0 && (
+                  <div className="flex items-center justify-between mb-3 text-sm">
+                    <span className="text-gray-600">Você economizou:</span>
+                    <span className="text-green-600 font-semibold">
+                      R$ {cartMetrics.savedAmount.toFixed(2)}
+                    </span>
+                  </div>
+                )}
+                
+                {/* Total */}
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-lg font-bold text-gray-900">Total:</span>
+                  <span className="text-2xl font-bold text-blue-600">
+                    R$ {cartMetrics.totalValue.toFixed(2)}
+                  </span>
+                </div>
+                
+                {/* Checkout Button */}
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2"
+                >
+                  <Gift className="w-5 h-5" />
+                  Finalizar Compra
+                </motion.button>
+=======
               <div className="border-t bg-white p-4 space-y-4">
                 {/* Total */}
                 <div className="space-y-2">
@@ -279,6 +407,7 @@ const EnhancedCart: React.FC = () => {
                     <span>+1000 vendas</span>
                   </div>
                 </div>
+>>>>>>> f73d985fb2c11ca1b8aeb6510f4465ea32fd8f9c
               </div>
             )}
           </motion.div>

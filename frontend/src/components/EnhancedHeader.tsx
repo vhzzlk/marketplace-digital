@@ -7,12 +7,18 @@ import {
   Star, 
   Zap,
   LogOut,
+<<<<<<< HEAD
+  Crown
+} from 'lucide-react';
+import { useApp } from '../contexts/AppContext';
+=======
   Settings,
   Gift,
   Crown
 } from 'lucide-react';
 import { useApp } from '../contexts/AppContext';
 import LiveActivityIndicator from './LiveActivityIndicator';
+>>>>>>> f73d985fb2c11ca1b8aeb6510f4465ea32fd8f9c
 
 const EnhancedHeader: React.FC = () => {
   const { state, actions } = useApp();
@@ -29,6 +35,14 @@ const EnhancedHeader: React.FC = () => {
   };
 
   const getLevelIcon = (level: string) => {
+<<<<<<< HEAD
+    return level === 'Platinum' ? <Crown className="w-4 h-4" /> : <Star className="w-4 h-4" />;
+  };
+
+  return (
+    <header className="bg-gradient-to-r from-gray-900 via-blue-900 to-purple-900 text-white shadow-lg">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+=======
     switch (level) {
       case 'Platinum': return <Crown className="w-4 h-4" />;
       default: return <Star className="w-4 h-4" />;
@@ -42,6 +56,7 @@ const EnhancedHeader: React.FC = () => {
       <div className="absolute inset-0 bg-black/10" />
       
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+>>>>>>> f73d985fb2c11ca1b8aeb6510f4465ea32fd8f9c
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <motion.div 
@@ -57,8 +72,20 @@ const EnhancedHeader: React.FC = () => {
           </motion.div>
 
           {/* Center - Live Activity */}
+<<<<<<< HEAD
+          <div className="hidden md:flex items-center space-x-4">
+            <div className="flex items-center space-x-2 text-sm">
+              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+              <span>1.247 usuários online</span>
+            </div>
+            <div className="flex items-center space-x-2 text-sm">
+              <Star className="w-4 h-4 text-yellow-400" />
+              <span>4.8/5 avaliação</span>
+            </div>
+=======
           <div className="hidden md:block">
             <LiveActivityIndicator showGlobal className="flex-1" />
+>>>>>>> f73d985fb2c11ca1b8aeb6510f4465ea32fd8f9c
           </div>
 
           {/* Right Side */}
@@ -98,6 +125,35 @@ const EnhancedHeader: React.FC = () => {
                 <button
                   onClick={actions.logout}
                   className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+<<<<<<< HEAD
+                  title="Sair"
+                >
+                  <LogOut className="w-5 h-5" />
+                </button>
+              </div>
+            ) : (
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => window.location.href = '/login'}
+                className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-2 rounded-lg font-medium hover:shadow-lg transition-all duration-300"
+              >
+                Entrar
+              </motion.button>
+            )}
+
+            {/* Notifications */}
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="relative p-2 hover:bg-white/10 rounded-lg transition-colors"
+              title="Notificações"
+            >
+              <Bell className="w-5 h-5" />
+              <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full text-xs flex items-center justify-center">
+                3
+              </span>
+=======
                   title="Logout"
                 >
                   <LogOut className="w-4 h-4" />
@@ -123,10 +179,29 @@ const EnhancedHeader: React.FC = () => {
                   {state.notifications.length}
                 </span>
               )}
+>>>>>>> f73d985fb2c11ca1b8aeb6510f4465ea32fd8f9c
             </motion.button>
 
             {/* Cart */}
             <motion.button
+<<<<<<< HEAD
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={actions.toggleCart}
+              className="relative p-2 hover:bg-white/10 rounded-lg transition-colors"
+              title="Carrinho"
+            >
+              <ShoppingCart className="w-5 h-5" />
+              {cartMetrics.totalItems > 0 && (
+                <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full text-xs flex items-center justify-center font-bold">
+                  {cartMetrics.totalItems}
+                </span>
+              )}
+            </motion.button>
+          </div>
+        </div>
+      </div>
+=======
               onClick={actions.toggleCart}
               className="relative p-2 hover:bg-white/10 rounded-lg transition-colors"
               whileHover={{ scale: 1.1 }}
@@ -195,6 +270,7 @@ const EnhancedHeader: React.FC = () => {
 
       {/* Glow Effect */}
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-400 to-transparent opacity-50" />
+>>>>>>> f73d985fb2c11ca1b8aeb6510f4465ea32fd8f9c
     </header>
   );
 };

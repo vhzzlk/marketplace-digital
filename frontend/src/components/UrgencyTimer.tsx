@@ -7,7 +7,10 @@ interface UrgencyTimerProps {
   title?: string;
   urgent?: boolean;
   onExpire?: () => void;
+<<<<<<< HEAD
+=======
   className?: string;
+>>>>>>> f73d985fb2c11ca1b8aeb6510f4465ea32fd8f9c
 }
 
 interface TimeLeft {
@@ -21,8 +24,12 @@ const UrgencyTimer: React.FC<UrgencyTimerProps> = ({
   endTime,
   title = "Oferta especial termina em:",
   urgent = false,
+<<<<<<< HEAD
+  onExpire
+=======
   onExpire,
   className = ""
+>>>>>>> f73d985fb2c11ca1b8aeb6510f4465ea32fd8f9c
 }) => {
   const [timeLeft, setTimeLeft] = useState<TimeLeft>({ hours: 0, minutes: 0, seconds: 0, total: 0 });
   const [isExpired, setIsExpired] = useState(false);
@@ -58,6 +65,11 @@ const UrgencyTimer: React.FC<UrgencyTimerProps> = ({
   const isUrgent = timeLeft.total < 900000; // Less than 15 minutes
   
   const getUrgencyColor = () => {
+<<<<<<< HEAD
+    if (isVeryUrgent) return 'from-red-600 to-orange-500';
+    if (isUrgent) return 'from-orange-500 to-red-500';
+    return 'from-blue-500 to-purple-500';
+=======
     if (isVeryUrgent) return 'from-red-600 via-red-500 to-orange-500';
     if (isUrgent) return 'from-orange-500 via-yellow-500 to-red-500';
     return 'from-blue-500 via-purple-500 to-pink-500';
@@ -67,6 +79,7 @@ const UrgencyTimer: React.FC<UrgencyTimerProps> = ({
     if (isVeryUrgent) return 'text-red-100';
     if (isUrgent) return 'text-orange-100';
     return 'text-blue-100';
+>>>>>>> f73d985fb2c11ca1b8aeb6510f4465ea32fd8f9c
   };
 
   const formatNumber = (num: number) => num.toString().padStart(2, '0');
@@ -74,8 +87,12 @@ const UrgencyTimer: React.FC<UrgencyTimerProps> = ({
   if (isExpired) {
     return (
       <motion.div 
+<<<<<<< HEAD
+        className="bg-gradient-to-r from-gray-500 to-gray-700 text-white p-4 rounded-lg text-center"
+=======
         className={`bg-gradient-to-r from-gray-500 to-gray-700 text-white 
                    p-4 rounded-lg text-center ${className}`}
+>>>>>>> f73d985fb2c11ca1b8aeb6510f4465ea32fd8f9c
         initial={{ scale: 1 }}
         animate={{ scale: [1, 1.05, 1] }}
         transition={{ duration: 1, repeat: 3 }}
@@ -90,8 +107,12 @@ const UrgencyTimer: React.FC<UrgencyTimerProps> = ({
 
   return (
     <motion.div 
+<<<<<<< HEAD
+      className={`bg-gradient-to-r ${getUrgencyColor()} p-4 rounded-lg backdrop-blur-sm border border-white/30`}
+=======
       className={`bg-gradient-to-r ${getUrgencyColor()} p-4 rounded-lg 
                  backdrop-blur-sm border-2 border-white/30 ${className}`}
+>>>>>>> f73d985fb2c11ca1b8aeb6510f4465ea32fd8f9c
       animate={isVeryUrgent ? { 
         scale: [1, 1.02, 1],
         boxShadow: [
@@ -100,6 +121,35 @@ const UrgencyTimer: React.FC<UrgencyTimerProps> = ({
           '0 0 0 0 rgba(239, 68, 68, 0)'
         ]
       } : {}}
+<<<<<<< HEAD
+      transition={{ duration: 1, repeat: isVeryUrgent ? Infinity : 0 }}
+    >
+      <div className="text-center">
+        <div className="flex items-center justify-center space-x-2 mb-2">
+          {isVeryUrgent ? <Zap className="w-5 h-5" /> : <Clock className="w-5 h-5" />}
+          <span className="font-bold text-white">
+            {isVeryUrgent ? '⚡ ÚLTIMA CHANCE!' : title}
+          </span>
+        </div>
+        
+        <div className="font-mono text-2xl font-bold text-white mb-2">
+          {formatNumber(timeLeft.hours)}:{formatNumber(timeLeft.minutes)}:{formatNumber(timeLeft.seconds)}
+        </div>
+        
+        {/* Progress Bar */}
+        <div className="w-full bg-white/20 rounded-full h-2 mb-2">
+          <motion.div
+            className="h-2 rounded-full bg-white"
+            initial={{ width: '100%' }}
+            animate={{ width: `${Math.max(0, Math.min(100, (timeLeft.total / (24 * 60 * 60 * 1000)) * 100))}%` }}
+            transition={{ duration: 1, ease: 'linear' }}
+          />
+        </div>
+        
+        <div className="text-xs text-white/80">
+          {isVeryUrgent ? 'Não perca esta oportunidade!' : 'Aproveite enquanto dura!'}
+        </div>
+=======
       transition={isVeryUrgent ? { 
         duration: 1.5, 
         repeat: Infinity,
@@ -201,6 +251,7 @@ const UrgencyTimer: React.FC<UrgencyTimerProps> = ({
           }}
           transition={{ duration: 0.5 }}
         />
+>>>>>>> f73d985fb2c11ca1b8aeb6510f4465ea32fd8f9c
       </div>
     </motion.div>
   );
